@@ -1162,7 +1162,7 @@ angular.module('vr.directives.slider', ['ngTouch']).directive('slider',
                                 /**
                                  * What to do when dragging ends
                                  */
-                                function onEnd() {
+                                function onEnd(event) {
 
                                     // reset the offsets
                                     stickyOffsetLow = 0;
@@ -1178,6 +1178,9 @@ angular.module('vr.directives.slider', ['ngTouch']).directive('slider',
                                         // the pointer is no longer active
                                         pointer.removeClass('active');
                                     }
+                                    angular.element(event.target).css({
+                                        'z-index': 1
+                                    });
 
                                     // reset the references
                                     pointer = null;
@@ -1415,6 +1418,9 @@ angular.module('vr.directives.slider', ['ngTouch']).directive('slider',
 
                                     // set the knob/bar to active
                                     pointer.addClass('active');
+                                    angular.element(event.target).css({
+                                        'z-index': 2
+                                    });
 
                                     if(ref === refSel) {
                                         // the selection bar is being dragged
@@ -1466,7 +1472,7 @@ angular.module('vr.directives.slider', ['ngTouch']).directive('slider',
                                              */
                                             function end(coords, ev) {
                                                 onMove(ev);
-                                                onEnd();
+                                                onEnd(ev);
                                             }
 
                                             // bind events to the range input
@@ -1536,7 +1542,7 @@ angular.module('vr.directives.slider', ['ngTouch']).directive('slider',
                                                 },
                                                 end   : function(coords, ev) {
                                                     onMove(ev);
-                                                    onEnd();
+                                                    onEnd(ev);
                                                 },
                                                 cancel: function(coords, ev) {
                                                     onEnd(ev);
